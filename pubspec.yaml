@@ -1,0 +1,26 @@
+name: aula_2309
+description: Projeto de exemplo com login e cadastro usando SQLite
+publish_to: "none" # Este projeto não será publicado no pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  shared_preferences: ^2.2.2
+  flutter_secure_storage: ^9.2.4
+  provider: ^6.0.5
+  sqflite: ^2.2.5+1
+  path_provider: ^2.0.14
+  path: ^1.8.3
+  supabase_flutter: ^2.5.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
