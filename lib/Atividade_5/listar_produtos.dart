@@ -1,4 +1,6 @@
+import 'package:aula_2309/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProdutosPage extends StatefulWidget {
@@ -22,7 +24,6 @@ class _ProdutosPageState extends State<ProdutosPage> {
   Future<void> _fetchProdutos() async {
     try {
       final response = await supabase.from('produto').select('*');
-      print(response); // Veja o que está vindo do Supabase
       setState(() {
         produtos = List<Map<String, dynamic>>.from(response);
         loading = false;
@@ -37,8 +38,22 @@ class _ProdutosPageState extends State<ProdutosPage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      appBar: AppBar(title: const Text("Lista de Produtos")),
+      appBar: AppBar(
+        title: const Text("Lista de Produtos"),
+        actions: [
+          IconButton(
+            icon: Icon(themeProvider.isDarkMode
+                ? Icons.light_mode
+                : Icons.dark_mode),
+            onPressed: () {
+              themeProvider.toggleTheme();
+            },
+          ),
+        ],
+        centerTitle: true,
+      ),
       body: loading
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(

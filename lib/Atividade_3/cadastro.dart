@@ -1,8 +1,8 @@
 import 'package:aula_2309/Atividade_3/database_helper.dart';
-import 'package:aula_2309/themeprovider.dart';
+import 'package:aula_2309/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'listarUsuarios.dart'; // Adicione este import
+import 'listar_usuarios.dart'; // Adicione este import
 
 class CadastroPage3 extends StatefulWidget {
   const CadastroPage3({super.key});

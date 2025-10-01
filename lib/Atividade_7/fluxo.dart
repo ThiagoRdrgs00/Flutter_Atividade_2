@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../themeprovider.dart';
+import '../theme_provider.dart';
 
 class FluxoPage extends StatelessWidget {
   const FluxoPage({super.key});
