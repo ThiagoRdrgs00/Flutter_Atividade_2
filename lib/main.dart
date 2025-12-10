@@ -12,8 +12,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
-    url: 'https://jmitevbdgrtjpmxyrwuw.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImptaXRldmJkZ3J0anBteHlyd3V3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkyODA4MzMsImV4cCI6MjA3NDg1NjgzM30.QBQYzyfQmkx7ZxsRuI25jtV_Zez93NjNnAbnZ3eI_Do',
+    url: 'https://enghhcpurfnkvoeudfpq.supabase.co',
+    anonKey: 'sb_publishable_HV9wTcL90ZDaR5GXvJp7KA_k46MMTM-',
   );
 
   runApp(
@@ -100,7 +100,7 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ProdutosPage()),
+                  MaterialPageRoute(builder: (context) => const ProductsPage()),
                 );
               },
               child: const Text("Atividade 5"),

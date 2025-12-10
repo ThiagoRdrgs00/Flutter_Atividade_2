@@ -1,71 +1,74 @@
-import 'package:aula_2309/theme_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class ProdutosPage extends StatefulWidget {
-  const ProdutosPage({super.key});
+class ProductsPage extends StatefulWidget {
+  const ProductsPage({super.key});
 
   @override
-  State<ProdutosPage> createState() => _ProdutosPageState();
+  State<ProductsPage> createState() => _ProductsPageState();
 }
 
-class _ProdutosPageState extends State<ProdutosPage> {
-  final supabase = Supabase.instance.client; // aqui pode usar tranquilo
-  List<Map<String, dynamic>> produtos = [];
+class _ProductsPageState extends State<ProductsPage> {
+  final supabase = Supabase.instance.client;
+  List<dynamic> produtos = [];
   bool loading = true;
 
   @override
   void initState() {
     super.initState();
-    _fetchProdutos();
+    carregarProdutos();
   }
 
-  Future<void> _fetchProdutos() async {
+  Future<void> carregarProdutos() async {
+    setState(() => loading = true);
+
     try {
-      final response = await supabase.from('produto').select('*');
+      final response = await supabase
+          .from('produto')
+          .select()
+          .order('id', ascending: true);
+      
+      print(response);
+      print("teste");
+
       setState(() {
-        produtos = List<Map<String, dynamic>>.from(response);
+        produtos = response;
         loading = false;
       });
     } catch (e) {
-      print('Erro ao buscar produtos: $e');
-      setState(() {
-        loading = false;
-      });
+      setState(() => loading = false);
+      print("Erro ao carregar: $e");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Lista de Produtos"),
-        actions: [
-          IconButton(
-            icon: Icon(themeProvider.isDarkMode
-                ? Icons.light_mode
-                : Icons.dark_mode),
-            onPressed: () {
-              themeProvider.toggleTheme();
-            },
-          ),
-        ],
-        centerTitle: true,
+        title: const Text('Lista de Produtos'),
       ),
+
       body: loading
           ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: produtos.length,
-              itemBuilder: (context, index) {
-                final p = produtos[index];
-                return ListTile(
-                  title: Text(p['nome']),
-                  subtitle: Text(p['descricao'] ?? ''),
-                  trailing: Text("R\$ ${p['preco']}"),
-                );
-              },
+          : RefreshIndicator(
+              onRefresh: carregarProdutos,
+              child: ListView.builder(
+                padding: const EdgeInsets.all(10),
+                itemCount: produtos.length,
+                itemBuilder: (context, index) {
+                  final item = produtos[index];
+
+                  return Card(
+                    child: ListTile(
+                      title: Text(item['nome']),
+                      subtitle: Text("Valor: R\$ ${item['valor']}"),
+                      leading: CircleAvatar(
+                        child: Text(item['id'].toString()),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
     );
   }
